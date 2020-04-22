@@ -1,5 +1,6 @@
 #pragma once
 using namespace std;
+
 class Matrix {
 
  int height;
@@ -7,10 +8,12 @@ class Matrix {
 
 public:
     int** arr;
+    // asdsadsadasd;
+    //SecondCommit
     
     Matrix(int height, int width)
     {
-        cout << "Âûçâàëñÿ êîíñòðóêòîð: " << this << endl;
+        cout << "Вызвался конструктор: " << this << endl;
         cout << "\n";
         this->height = height;
         this->width = width;
@@ -33,7 +36,7 @@ public:
         Matrix operator+(const Matrix& SecondMatrix) 
         {
          /* cout << SecondMatrix.arr<<endl;*/
-            cout << "Âûçâàëàñÿ îïðåàòîð ñëîæåíèÿ ìàòðèö: " << this << endl;
+            cout << "Вызвалася опреатор сложения матриц: " << this << endl;
             Matrix Result(this->height, this->width);
             for (int i = 0; i < this->height; i++)
             {
@@ -51,7 +54,7 @@ public:
          
         Matrix& operator=(const Matrix &SecondMatrix)
             {
-                cout << "Âûçâàëàñÿ îïðåàòîð ïðèñâàèâàíèÿ ìàòðèö: " << this << endl;
+                cout << "Вызвалася опреатор присваивания матриц: " << this << endl;
                 this->height = SecondMatrix.height;
                 this->width = SecondMatrix.width;
                
@@ -75,7 +78,7 @@ public:
             
         Matrix operator*(const Matrix& SecondMatrix)
         {
-            cout << "Âûçâàëàñÿ îïðåàòîð óìíîæåíèÿ ìàòðèö: C " << this << endl;
+            cout << "Вызвалася опреатор умножения матриц: C " << this << endl;
 
             Matrix Result(this->height, SecondMatrix.width);
           
@@ -96,7 +99,7 @@ public:
       
         void printMatrix()
         {
-            cout << "Âûçâàëàñü ôóíêöèÿ printMatrix: " << this << endl;
+            cout << "Вызвалась функция printMatrix: " << this << endl;
             for (int i = 0; i < this->height; i++)
             {
                 for (int j = 0; j < this->width; j++)
@@ -107,7 +110,7 @@ public:
         }
             /*~Matrix()
             {
-                cout << "Âûçâàëñÿ Äåñòðóêòîð" << this<<endl;
+                cout << "Вызвался Деструктор" << this<<endl;
                 for (int i = 0; i < this->height; i++) 
                 {
                     delete[] this->arr[i];

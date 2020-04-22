@@ -7,7 +7,7 @@ public:
     int* arr;
     Vector(int size)
     {
-        cout <<"Âûçâàëñÿ êîíñòðóêòîð: " << this<<endl;
+        cout <<"Ð’Ñ‹Ð·Ð²Ð°Ð»ÑÑ ÐºÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€: " << this<<endl;
         cout << "\n";
         this->size = size;
         this->arr = new int[size];
@@ -53,14 +53,14 @@ public:
     }
     void print()
     {
-        cout << "Âûçâàëàñü ôóíêöèÿ print äëÿ îáúåêòà: " << this<<endl;
+        cout << "Ð’Ñ‹Ð·Ð²Ð°Ð»Ð°ÑÑŒ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ print Ð´Ð»Ñ Ð¾Ð±ÑŠÐµÐºÑ‚Ð°: " << this<<endl;
         for (int i = 0; i < size; i++)
             std::cout << arr[i] << " ";
         std::cout << "\n";
     }
   
     ~Vector() {
-        cout << "Âûçâàëñÿ Äåñòðóêòîð: " << this<<"\n";
+        cout << "Ð’Ñ‹Ð·Ð²Ð°Ð»ÑÑ Ð”ÐµÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€: " << this<<"\n";
         delete[] arr;
     }
 };
