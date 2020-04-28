@@ -1,52 +1,52 @@
 #pragma once
-using namespace std;
-
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
 class Matrix {
-
- int height;
- int width;
+protected:
 
 public:
-    int** arr;
-    // asdsadsadasd;
-    //SecondCommit
+    float** arr;
+    int height;
+    int width;
+
+    
     
     Matrix(int height, int width)
     {
-        cout << "Ð’Ñ‹Ð·Ð²Ð°Ð»ÑÑ ÐºÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€: " << this << endl;
-        cout << "\n";
+       std::cout << "Âûçâàëñÿ êîíñòðóêòîð: " << this << std::endl;
+       std::cout << "\n";
         this->height = height;
         this->width = width;
-        arr = new int* [this->height];
+        arr = new float* [this->height];
         for (int i = 0; i < this->height; i++)
-            arr[i] = new int[width];
+            arr[i] = new float[width];
 
         for (int i = 0; i < this->height; i++)
         {
             for (int j = 0; j < this->width; j++)
             {
-                arr[i][j] = 1;
-               
+                arr[i][j] =/* 0.1**/(rand() % 21-10);
             };
           
         };
-        cout << endl;
+        std::cout << std::endl;
     }
 
         Matrix operator+(const Matrix& SecondMatrix) 
         {
          /* cout << SecondMatrix.arr<<endl;*/
-            cout << "Ð’Ñ‹Ð·Ð²Ð°Ð»Ð°ÑÑ Ð¾Ð¿Ñ€ÐµÐ°Ñ‚Ð¾Ñ€ ÑÐ»Ð¾Ð¶ÐµÐ½Ð¸Ñ Ð¼Ð°Ñ‚Ñ€Ð¸Ñ†: " << this << endl;
+            std::cout << "Âûçâàëàñÿ îïðåàòîð ñëîæåíèÿ ìàòðèö: " << this << std::endl;
             Matrix Result(this->height, this->width);
             for (int i = 0; i < this->height; i++)
             {
                 for (int j = 0; j < this->width; j++)
                 {
                     Result.arr[i][j] = this->arr[i][j]+SecondMatrix.arr[i][j];
-                    cout << Result.arr[i][j] << " ";
+                    std::cout << Result.arr[i][j] << " ";
 
                 };
-                cout << endl;
+                std::cout << std::endl;
             };
             return Result;
 
@@ -54,7 +54,7 @@ public:
          
         Matrix& operator=(const Matrix &SecondMatrix)
             {
-                cout << "Ð’Ñ‹Ð·Ð²Ð°Ð»Ð°ÑÑ Ð¾Ð¿Ñ€ÐµÐ°Ñ‚Ð¾Ñ€ Ð¿Ñ€Ð¸ÑÐ²Ð°Ð¸Ð²Ð°Ð½Ð¸Ñ Ð¼Ð°Ñ‚Ñ€Ð¸Ñ†: " << this << endl;
+            std::cout << "Âûçâàëàñÿ îïðåàòîð ïðèñâàèâàíèÿ ìàòðèö: " << this << std::endl;
                 this->height = SecondMatrix.height;
                 this->width = SecondMatrix.width;
                
@@ -62,9 +62,9 @@ public:
                     delete[] this->arr[i];
                 delete[] this->arr;
               
-               this-> arr = new int* [this->height];
+               this-> arr = new float* [this->height];
                 for (int i = 0; i < this->height; i++)
-                    this->arr[i] = new int[SecondMatrix.width];
+                    this->arr[i] = new float[SecondMatrix.width];
 
                 for (int i = 0; i < this->height; i++)
                 {
@@ -78,7 +78,7 @@ public:
             
         Matrix operator*(const Matrix& SecondMatrix)
         {
-            cout << "Ð’Ñ‹Ð·Ð²Ð°Ð»Ð°ÑÑ Ð¾Ð¿Ñ€ÐµÐ°Ñ‚Ð¾Ñ€ ÑƒÐ¼Ð½Ð¾Ð¶ÐµÐ½Ð¸Ñ Ð¼Ð°Ñ‚Ñ€Ð¸Ñ†: C " << this << endl;
+            std::cout << "Âûçâàëàñÿ îïðåàòîð óìíîæåíèÿ ìàòðèö: C " << this << std::endl;
 
             Matrix Result(this->height, SecondMatrix.width);
           
@@ -99,18 +99,18 @@ public:
       
         void printMatrix()
         {
-            cout << "Ð’Ñ‹Ð·Ð²Ð°Ð»Ð°ÑÑŒ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ printMatrix: " << this << endl;
+            std::cout << "Âûçâàëàñü ôóíêöèÿ printMatrix: " << this << std::endl;
             for (int i = 0; i < this->height; i++)
             {
                 for (int j = 0; j < this->width; j++)
-                    cout << arr[i][j] << " ";
-                cout << endl;
+                    std::cout<<"        "<< arr[i][j] <<"    ";
+                std::cout << std::endl;
             }
 
         }
             /*~Matrix()
             {
-                cout << "Ð’Ñ‹Ð·Ð²Ð°Ð»ÑÑ Ð”ÐµÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€" << this<<endl;
+                cout << "Âûçâàëñÿ Äåñòðóêòîð" << this<<endl;
                 for (int i = 0; i < this->height; i++) 
                 {
                     delete[] this->arr[i];
@@ -118,3 +118,70 @@ public:
                 delete[] this->arr;
             }*/
 };
+
+
+
+
+class GaussSolve : public Matrix
+{
+    
+public:
+    
+  
+    GaussSolve(int height, int width) : Matrix(height, width) 
+    {
+
+        /*std::cout << "Âûçâàëñÿ êîíñòðóêòîð: " << this << std::endl;
+        std::cout << "\n";
+        this->height = height;
+        this->width = width;
+        this->arr = new float* [this->height];
+        for (int i = 0; i < this->height; i++)
+           this->arr[i] = new float[width];
+
+        for (int i = 0; i < this->height; i++)
+        {
+            for (int j = 0; j < this->width; j++)
+            {
+               this->arr[i][j] = 0.1*( rand() % 201 - 100);
+            };
+
+        };
+        std::cout << std::endl;*/
+    };
+    float tmpdef = 0;
+    float tmpstring = 0;
+    void funcGaussSolve(Matrix matrixToSolve)
+    {
+        GaussSolve Result(matrixToSolve.height, matrixToSolve.width);
+        for (int i = 0; i<matrixToSolve.height;i++)
+            for (int j = 0; j < matrixToSolve.width; j++)
+            {
+                Result.arr[i][j] = matrixToSolve.arr[i][j];
+            };
+        int tmpsize = 0;
+        if (matrixToSolve.height <= matrixToSolve.width)
+            tmpsize = matrixToSolve.height;
+        else tmpsize = matrixToSolve.width;
+
+        for (int j = 0, i = 0;  j < tmpsize ; j++, i++)
+        {
+            tmpdef = Result.arr[i][j];
+            std::cout << "tmp koeff: " << tmpdef <<" i = "<< i <<" j= "<< j << std::endl;
+
+            for (int k = i+1, n= matrixToSolve.height - j-1;n>0; k++,n--)
+            {
+                tmpstring = (-1) * Result.arr[k][j] / tmpdef;
+                std::cout << "tmpstring koeff: " << tmpstring << " k = " << k << std::endl;
+                for (int l = 0; l < matrixToSolve.width; l++)
+                {
+                    Result.arr[k][l] = Result.arr[k][l] + Result.arr[i][l]*tmpstring;
+                    std::cout << Result.arr[k][l] << "         " ;
+                };
+                std::cout << std::endl;
+            };
+            Result.printMatrix();
+        };
+
+    };
+}; 
