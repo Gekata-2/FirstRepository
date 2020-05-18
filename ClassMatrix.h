@@ -1,12 +1,14 @@
 ﻿#pragma once
-#include <iostream>
 #include <cstdlib>
 #include <ctime>
+
+
+template <class T>
 class Matrix {
 protected:
 
 public:
-    float** arr;
+    T** arr;
     int height;
     int width;
 
@@ -18,15 +20,15 @@ public:
        std::cout << "\n";
         this->height = height;
         this->width = width;
-        arr = new float* [this->height];
+        arr = new T* [this->height];
         for (int i = 0; i < this->height; i++)
-            arr[i] = new float[width];
+            arr[i] = new T[width];
 
         for (int i = 0; i < this->height; i++)
         {
             for (int j = 0; j < this->width; j++)
             {
-                arr[i][j] =/* 0.1**/(rand() % 21-10);
+                arr[i][j] = 0.1*(rand() % 201-100);
             };
           
         };
@@ -95,7 +97,7 @@ public:
             };
           return Result;
         }
-      
+        
         void printMatrix()
         {
             std::cout << "Вызвалась функция printMatrix: " << this << std::endl;
@@ -120,33 +122,17 @@ public:
 
 
 
-
-class GaussSolve : public Matrix
+template<class T>
+class GaussSolve : public Matrix<T>
 {
     
 public:
     
   
-    GaussSolve(int height, int width) : Matrix(height, width) 
+    GaussSolve(int height, int width) : Matrix<T>(height, width) 
     {
 
-        /*std::cout << "Вызвался конструктор: " << this << std::endl;
-        std::cout << "\n";
-        this->height = height;
-        this->width = width;
-        this->arr = new float* [this->height];
-        for (int i = 0; i < this->height; i++)
-           this->arr[i] = new float[width];
-
-        for (int i = 0; i < this->height; i++)
-        {
-            for (int j = 0; j < this->width; j++)
-            {
-               this->arr[i][j] = 0.1*( rand() % 201 - 100);
-            };
-
-        };
-        std::cout << std::endl;*/
+       
     };
     
    /* void swaplines(float line1[],float line2[],int size) 
@@ -160,7 +146,7 @@ public:
         };
     }*/
 
-    void funcGaussSolve(Matrix matrixToSolve)
+    void funcGaussSolve(Matrix<T> matrixToSolve)
     {
         float tmpdef = 0;
         float tmpstring = 0;
@@ -227,7 +213,7 @@ public:
                 //↑↑↑
             }
         };
-
+        Result.printMatrix();
         //↓Есть ли решения?↓
         for (int i = matrixToSolve.height - 1; i >= 0;)
         {
