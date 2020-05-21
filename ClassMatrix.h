@@ -28,7 +28,7 @@ public:
         {
             for (int j = 0; j < this->width; j++)
             {
-                arr[i][j] = 0.1*(rand() % 201-100);
+                arr[i][j] =/* 0.1**/(rand() % 11-5);
             };
           
         };
@@ -125,31 +125,35 @@ public:
 template<class T>
 class GaussSolve : public Matrix<T>
 {
-    
+
 public:
-    
-  
-    GaussSolve(int height, int width) : Matrix<T>(height, width) 
+
+    GaussSolve(int height, int width) : Matrix<T>(height, width)
     {
 
-       
+
     };
-    
-   /* void swaplines(float line1[],float line2[],int size) 
-    {
-        int tmpswap;
-        for (int i = 0; i < size; i++)
-        {
-            tmpswap = line1[i];
-            line1[i] = line2[i];
-            line2[i] = tmpswap;
-        };
-    }*/
+
+    /* void swaplines(float line1[],float line2[],int size)
+     {
+         int tmpswap;
+         for (int i = 0; i < size; i++)
+         {
+             tmpswap = line1[i];
+             line1[i] = line2[i];
+             line2[i] = tmpswap;
+         };
+     }*/
+    void printSolve() {
+        for (int j = 0; j < this->width; j++)
+            std::cout <<"X"<<j+1<< " = " << this->arr[0][j] << "    ";
+
+    }
 
     void funcGaussSolve(Matrix<T> matrixToSolve)
     {
-        float tmpdef = 0;
-        float tmpstring = 0;
+        T tmpdef = 0;
+        T tmpstring = 0;
         //↓Копирование матрицы из принимаемой в Result↓
         GaussSolve Result(matrixToSolve.height, matrixToSolve.width);
         for (int i = 0; i < matrixToSolve.height; i++)
@@ -158,7 +162,7 @@ public:
                 Result.arr[i][j] = matrixToSolve.arr[i][j];
             };
         //↑↑↑
-       
+
         //↓Поиск наибольшей размерности↓
         int tmpsize = 0;
         if (matrixToSolve.height <= matrixToSolve.width)
@@ -193,8 +197,8 @@ public:
             else
             {
                 //↓Смена строк если ключевой элемент равен 0↓
-                cout << "koeff = 0"<<endl;
-                for (int i = 0; i < matrixToSolve.height-1; i++)
+                cout << "koeff = 0" << endl;
+                for (int i = 0; i < matrixToSolve.height - 1; i++)
                 {
                     if (Result.arr[i][j] == 0)
                     {
@@ -231,39 +235,59 @@ public:
         };
         //↑↑↑
 
-     /*   if (matrixToSolve.width == matrixToSolve.height) 
+        GaussSolve<T> Solve(1, matrixToSolve.height);
+        if (matrixToSolve.width == matrixToSolve.height+1)
         {
-            Matrix Solve(1, matrixToSolve.width - 1);
+            T tmpp;
+            for (int i = tmpsize - 1, j = tmpsize - 1; i >= 0; i--, j--)
+            {
+                tmpp = Result.arr[i][j];
+                for (int t = 0; t <= tmpsize; t++)
+                {
+                    if (Result.arr[i][t] != 0)
+                    {
+                        Result.arr[i][t] = Result.arr[i][t] / tmpp;
+                    };
+                };
 
-            int f = matrixToSolve.width;
-           
+            };
+            Result.printMatrix();
+
+
+            for (int i = tmpsize - 1, j = tmpsize - 1; i >= 0; i--, j--)
+            {
+                for (int k = 0; k < matrixToSolve.width - 1; k++)
+                {
+                    if (k != i)
+                    {
+                      
+                        std::cout << "\n" << Result.arr[i][matrixToSolve.width - 1] << " - " << Result.arr[i][k] << endl;
+                        Solve.arr[0][j] = Result.arr[i][matrixToSolve.width - 1] - Result.arr[i][k];
+                        Result.arr[i][matrixToSolve.width - 1] =
+                            Result.arr[i][matrixToSolve.width - 1] - Result.arr[i][k];
+                        Result.arr[i][k] = 0;
+                        
+
+                    }
+                   
+                };
+               
+                for (int t = j - 1; t >= 0; t--)
+                {
+                    std::cout << "\n" << Result.arr[t][j] << " * " << Solve.arr[0][j] << endl;
+                    Result.arr[t][j] = Result.arr[t][j] * Solve.arr[0][j];
+                    
+                };
+                Result.printMatrix();
+
+            };
+            Result.printMatrix();
           
+            std::cout << "\n Решение: \n" << std::endl;
+                Solve.printSolve();
+
+        };
+    };
 
 
-
-        }*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    };  
 };
-
-    
-
