@@ -2,22 +2,18 @@
 #include <cstdlib>
 #include <ctime>
 
-
 template <class T>
 class Matrix {
-protected:
-
 public:
+   
     T** arr;
     int height;
     int width;
-
-    
     
     Matrix(int height, int width)
     {
-       std::cout << "Вызвался конструктор: " << this << std::endl;
-       std::cout << "\n";
+       
+      
         this->height = height;
         this->width = width;
         arr = new T* [this->height];
@@ -28,45 +24,49 @@ public:
         {
             for (int j = 0; j < this->width; j++)
             {
-                arr[i][j] =/* 0.1**/(rand() % 11-5);
+                arr[i][j] =(rand() % 11-5);
             };
           
         };
-        std::cout << std::endl;
+  
+    }
+    //Конструктор копирования
+    Matrix(const Matrix& CopyMatrix)
+    {
+        this->height = CopyMatrix.height;
+        this->width = CopyMatrix.width;
+        this->arr = new T * [this->height];
+        for (int i = 0; i < this->height; i++)
+            this->arr[i] = new T[width];
+
+        for (int i = 0; i < CopyMatrix.height; i++)
+        {
+            for (int j = 0; j < CopyMatrix.width; j++)
+            {
+                this->arr[i][j] = CopyMatrix.arr[i][j];
+            };
+
+        };
+
     }
 
-        Matrix operator+(const Matrix& SecondMatrix) 
-        {
-         /* cout << SecondMatrix.arr<<endl;*/
-            std::cout << "Вызвалася опреатор сложения матриц: " << this << std::endl;
-            Matrix Result(this->height, this->width);
-            for (int i = 0; i < this->height; i++)
-            {
-                for (int j = 0; j < this->width; j++)
-                {
-                    Result.arr[i][j] = this->arr[i][j]+SecondMatrix.arr[i][j];
-                    std::cout << Result.arr[i][j] << " ";
-
-                };
-                std::cout << std::endl;
-            };
-            return Result;
-
-        }
+   
          
         Matrix& operator=(const Matrix &SecondMatrix)
+        {
+            if (this != &SecondMatrix)
             {
-            std::cout << "Вызвалася опреатор присваивания матриц: " << this << std::endl;
-                this->height = SecondMatrix.height;
-                this->width = SecondMatrix.width;
-               
+                
                 for (int i = 0; i < this->height; i++)
                     delete[] this->arr[i];
                 delete[] this->arr;
-              
-               this-> arr = new float* [this->height];
+
+                this->height = SecondMatrix.height;
+                this->width = SecondMatrix.width;
+
+                this->arr = new T* [this->height];
                 for (int i = 0; i < this->height; i++)
-                    this->arr[i] = new float[SecondMatrix.width];
+                    this->arr[i] = new T[SecondMatrix.width];
 
                 for (int i = 0; i < this->height; i++)
                 {
@@ -77,47 +77,135 @@ public:
                 };
                 return *this;
             }
-            
+        }
+        Matrix operator+(const Matrix& SecondMatrix)
+        {
+            try 
+            {
+                if ((this->width != SecondMatrix.width) || (this->height != SecondMatrix.height))
+                {
+                    int a = -1;
+                    throw a;
+                }
+                else 
+                {
+                    Matrix Result(this->height, this->width);
+                    for (int i = 0; i < this->height; i++)
+                    {
+                        for (int j = 0; j < this->width; j++)
+                        {
+                            Result.arr[i][j] = this->arr[i][j] + SecondMatrix.arr[i][j];
+                           
+
+                        };
+                        
+                    };
+                    return Result;
+                }
+            }
+            catch (int)
+            {
+                std::cout << "\n !!!Ошбика: Матрицы разных размерностей(не подходит для сложения)\n!!!Завершение программы" << std::endl;
+                exit(1);
+              
+            };
+
+        }
         Matrix operator*(const Matrix& SecondMatrix)
         {
-            std::cout << "Вызвалася опреатор умножения матриц: C " << this << std::endl;
-
-            Matrix Result(this->height, SecondMatrix.width);
-          
-            for ( int i = 0; i < this->height; i++)
+            try 
             {
-                for (int j = 0; j < SecondMatrix.width; j++)
+                if(this->width == SecondMatrix.height)
                 {
-                    Result.arr[i][j] = 0;
-                    for (int k = 0; k < this->width; k++)
+                    Matrix Result(this->height, SecondMatrix.width);
+
+                    for (int i = 0; i < this->height; i++)
                     {
-                        Result.arr[i][j] = Result.arr[i][j] + this->arr[i][k] * SecondMatrix.arr[k][j];
+                        for (int j = 0; j < SecondMatrix.width; j++)
+                        {
+                            Result.arr[i][j] = 0;
+                            for (int k = 0; k < this->width; k++)
+                            {
+                                Result.arr[i][j] = Result.arr[i][j] + this->arr[i][k] * SecondMatrix.arr[k][j];
+                            };
+                        };
                     };
-                };
+                    return Result;
+                }
+                else
+                {
+                    int a = -1;
+                    throw a;
+                }
+            }
+            catch (int)
+            {
+                std::cout << "\n !!!Ошбика:Количество столбцов первой матрицы не равно количеству строк второй матрицы(не подходят под умножение)!!!\nЗавершение программы" << std::endl;
+               exit(1);
+               
             };
-          return Result;
         }
         
         void printMatrix()
         {
-            std::cout << "Вызвалась функция printMatrix: " << this << std::endl;
             for (int i = 0; i < this->height; i++)
             {
                 for (int j = 0; j < this->width; j++)
-                    std::cout<<"        "<< arr[i][j] <<"    ";
+                {
+                    std::cout.width(3);
+                    std::cout << arr[i][j];
+                }
                 std::cout << std::endl;
             }
 
         }
-            /*~Matrix()
+        void printExtendedMatrix()
+        {
+            for (int i = 0; i < this->height; i++)
             {
-                cout << "Вызвался Деструктор" << this<<endl;
-                for (int i = 0; i < this->height; i++) 
+                for (int j = 0; j < this->width; j++)
                 {
-                    delete[] this->arr[i];
+                    if (j == this->width - 1)
+                        std::cout << " | ";
+                    std::cout.width(7);
+                    std::cout<< arr[i][j];
                 }
-                delete[] this->arr;
-            }*/
+                std::cout << std::endl;
+            }
+            std::cout << std::endl;
+        }
+
+            ~Matrix()
+            {
+                if (*arr != nullptr)
+                {
+                    for (int i = 0; i < this->height; i++)
+                    {
+                        delete[] this->arr[i];
+                    }
+                    delete[] this->arr;
+                }
+            }
+};
+
+
+template <class T>
+std::ostream& operator<<(std::ostream& os, const Matrix<T>& Matrix)
+{
+    os << "\n";
+  
+   for (int i = 0; i < Matrix.height; i++)
+   {
+       for (int j = 0; j < Matrix.width; j++)
+       {
+           std::cout.width(3);
+           os << Matrix.arr[i][j] << "  ";
+
+       };
+       os << std::endl;
+
+   };
+     return os;
 };
 
 
@@ -131,26 +219,15 @@ public:
     GaussSolve(int height, int width) : Matrix<T>(height, width)
     {
 
-
     };
 
-    /* void swaplines(float line1[],float line2[],int size)
-     {
-         int tmpswap;
-         for (int i = 0; i < size; i++)
-         {
-             tmpswap = line1[i];
-             line1[i] = line2[i];
-             line2[i] = tmpswap;
-         };
-     }*/
     void printSolve() {
         for (int j = 0; j < this->width; j++)
             std::cout <<"X"<<j+1<< " = " << this->arr[0][j] << "    ";
 
     }
 
-    void funcGaussSolve(Matrix<T> matrixToSolve)
+    Matrix<T> funcGaussSolve(Matrix<T> matrixToSolve)
     {
         T tmpdef = 0;
         T tmpstring = 0;
@@ -170,7 +247,6 @@ public:
         else tmpsize = matrixToSolve.width;
         //↑↑↑
 
-
         for (int i = 0, j = 0; j < tmpsize; j++, i++)
         {
             if (Result.arr[i][j] != 0)
@@ -178,66 +254,84 @@ public:
                 //↓Обнуление столбоцов↓
                 tmpdef = Result.arr[i][j];
 
-                std::cout << "tmp koeff: " << tmpdef << " i = " << i << " j= " << j << std::endl;
-
                 for (int k = i + 1, n = matrixToSolve.height - j - 1; n > 0; k++, n--)
                 {
                     tmpstring = (-1) * Result.arr[k][j] / tmpdef;
-                    std::cout << "tmpstring koeff: " << tmpstring << " k = " << k << std::endl;
                     for (int l = 0; l < matrixToSolve.width; l++)
                     {
                         Result.arr[k][l] = Result.arr[k][l] + Result.arr[i][l] * tmpstring;
-                        std::cout << Result.arr[k][l] << "         ";
                     };
-                    std::cout << std::endl;
                 };
-                Result.printMatrix();
                 //↑↑↑
             }
             else
             {
                 //↓Смена строк если ключевой элемент равен 0↓
-                cout << "koeff = 0" << endl;
-                for (int i = 0; i < matrixToSolve.height - 1; i++)
+                if (i < tmpsize - 1)
                 {
-                    if (Result.arr[i][j] == 0)
+                    for (int s = 0; s < matrixToSolve.height; s++)
                     {
-                        int tmpswapJ;
-                        for (int j = 0; j < matrixToSolve.width; j++)
+                        if (Result.arr[s][j] != 0)
                         {
-                            tmpswapJ = Result.arr[i][j];
-                            Result.arr[i][j] = Result.arr[i + 1][j];
-                            Result.arr[i + 1][j] = tmpswapJ;
+                            int tmpswapS = 0;
+                            int tmpI = s;
+                            for (int j = 0; j < matrixToSolve.width; j++)
+                            {
+
+                                tmpswapS = Result.arr[tmpI][j];
+                                Result.arr[i][j] = Result.arr[tmpI][j];
+                                Result.arr[tmpI][j] = tmpswapS;
+                            };
+
+
                         };
                     };
-                    Result.printMatrix();
-                }
-                i--;
-                j--;
+                };
                 //↑↑↑
             }
         };
-        Result.printMatrix();
+ 
+        for (int i = 0; i < matrixToSolve.height; i++)
+        {
+            for (int j = 0; j < matrixToSolve.width; j++)
+            {
+                if ((Result.arr[i][j] < 0.00001) && (Result.arr[i][j] > -0.00001))
+                    Result.arr[i][j] = 0;
+            };
+        }
+
+        Result.printExtendedMatrix();
         //↓Есть ли решения?↓
         for (int i = matrixToSolve.height - 1; i >= 0;)
         {
+            int count = 0;
+            for (int t = 0; t < matrixToSolve.width - 1; t++)
+            {
+                if (Result.arr[i][t] != 0)
+                    count = 1;
+            };
             if (Result.arr[i][matrixToSolve.width - 1] == 0)
                 i--;
-            if ((Result.arr[i][matrixToSolve.width - 1] != 0)
-                && (Result.arr[i][matrixToSolve.width - 2] == 0))
+            if (i >= 0)
             {
-                cout << "\n!!!Решений нет!!!" << endl;
-                break;
-            };
-            if ((Result.arr[i][matrixToSolve.width - 1] != 0)
-                && (Result.arr[i][matrixToSolve.width - 2] != 0))
-                break;
+
+                if ((Result.arr[i][matrixToSolve.width - 1] != 0)
+                    && (count == 0))
+                {
+                    std::cout << "\n!!!Решений нет!!!" <<std::endl;
+                    break;
+                };
+                if ((Result.arr[i][matrixToSolve.width - 1] != 0)
+                    && (count != 0))
+                    break;
+            }
+            else break;
         };
         //↑↑↑
 
-        GaussSolve<T> Solve(1, matrixToSolve.height);
         if (matrixToSolve.width == matrixToSolve.height+1)
         {
+            GaussSolve<T> Solve(1, matrixToSolve.height);
             T tmpp;
             for (int i = tmpsize - 1, j = tmpsize - 1; i >= 0; i--, j--)
             {
@@ -251,8 +345,6 @@ public:
                 };
 
             };
-            Result.printMatrix();
-
 
             for (int i = tmpsize - 1, j = tmpsize - 1; i >= 0; i--, j--)
             {
@@ -260,34 +352,28 @@ public:
                 {
                     if (k != i)
                     {
-                      
-                        std::cout << "\n" << Result.arr[i][matrixToSolve.width - 1] << " - " << Result.arr[i][k] << endl;
+                       
                         Solve.arr[0][j] = Result.arr[i][matrixToSolve.width - 1] - Result.arr[i][k];
                         Result.arr[i][matrixToSolve.width - 1] =
                             Result.arr[i][matrixToSolve.width - 1] - Result.arr[i][k];
                         Result.arr[i][k] = 0;
-                        
-
+                      
                     }
-                   
                 };
-               
                 for (int t = j - 1; t >= 0; t--)
                 {
-                    std::cout << "\n" << Result.arr[t][j] << " * " << Solve.arr[0][j] << endl;
                     Result.arr[t][j] = Result.arr[t][j] * Solve.arr[0][j];
                     
                 };
-                Result.printMatrix();
-
+                Result.printExtendedMatrix();;
             };
-            Result.printMatrix();
+            Result.printExtendedMatrix();
           
             std::cout << "\n Решение: \n" << std::endl;
                 Solve.printSolve();
-
+                return Solve;
         };
+      
     };
-
 
 };
