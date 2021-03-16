@@ -1,6 +1,6 @@
 #pragma once
 //Интерфейс объектов-значений который может только создавать копию/разрушать объект 
-class IObjValue 
+class IObjValue
 {
 public:
 	virtual IObjValue* GetCopy() = 0; // создание копии

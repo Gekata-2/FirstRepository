@@ -1,7 +1,9 @@
+п»ї#pragma once
 #pragma once
 #include <memory>
 #include <string>
 #include <iostream>
+
 #include "CompletionCodesDefine.h"
 #include "MainConstantsEnum.h"
 #include "IObjValue.h"
@@ -9,40 +11,42 @@
 #define MEMORY_SIZE		 20
 
 class TText;
-class TAtomicTextLink;//класс- одна атомарное звено(строка)<--------------------<
-typedef TAtomicTextLink* PTAtomicTextLink;//новый тип данных:Указатель на звено ^
+class TAtomicTextLink;//ГЄГ«Г Г±Г±- Г®Г¤Г­Г  Г ГІГ®Г¬Г Г°Г­Г®ГҐ Г§ГўГҐГ­Г®(Г±ГІГ°Г®ГЄГ )<--------------------<
+typedef TAtomicTextLink* PTAtomicTextLink;//Г­Г®ГўГ»Г© ГІГЁГЇ Г¤Г Г­Г­Г»Гµ:Г“ГЄГ Г§Г ГІГҐГ«Гј Г­Г  Г§ГўГҐГ­Г® ^
 typedef char TextString[TEXT_LINE_LENGHT];//TextString==char[TEXT_LINE_LENGHT]
 
-//класс управления указателями 
+//ГЄГ«Г Г±Г± ГіГЇГ°Г ГўГ«ГҐГ­ГЁГї ГіГЄГ Г§Г ГІГҐГ«ГїГ¬ГЁ 
 class TTextPointerManagment
 {
-	//класс состоит из указателей не звенья(строки) в тексте
-	PTAtomicTextLink p_first_link;// указатель на первое звено
-	PTAtomicTextLink p_last_link; //указатель на послденее звено
-	PTAtomicTextLink p_first_free_link; // указатель на первое свободное звено
-	friend class TAtomicTextLink;//Благодаря тому что класс TAtomicTextLink является кентиком класса TTextMemoryManagment, 
-								 //он имеет доступ к privat-членам клссса TTextMemoryManagment
+	//ГЄГ«Г Г±Г± Г±Г®Г±ГІГ®ГЁГІ ГЁГ§ ГіГЄГ Г§Г ГІГҐГ«ГҐГ© Г­ГҐ Г§ГўГҐГ­ГјГї(Г±ГІГ°Г®ГЄГЁ) Гў ГІГҐГЄГ±ГІГҐ
+	 PTAtomicTextLink p_first_link;// ГіГЄГ Г§Г ГІГҐГ«Гј Г­Г  ГЇГҐГ°ГўГ®ГҐ Г§ГўГҐГ­Г®
+	 PTAtomicTextLink p_last_link; //ГіГЄГ Г§Г ГІГҐГ«Гј Г­Г  ГЇГ®Г±Г«Г¤ГҐГ­ГҐГҐ Г§ГўГҐГ­Г®
+	 PTAtomicTextLink p_first_free_link; // ГіГЄГ Г§Г ГІГҐГ«Гј Г­Г  ГЇГҐГ°ГўГ®ГҐ Г±ГўГ®ГЎГ®Г¤Г­Г®ГҐ Г§ГўГҐГ­Г®
+	friend class TAtomicTextLink;//ГЃГ«Г ГЈГ®Г¤Г Г°Гї ГІГ®Г¬Гі Г·ГІГ® ГЄГ«Г Г±Г± TAtomicTextLink ГїГўГ«ГїГҐГІГ±Гї ГЄГҐГ­ГІГЁГЄГ®Г¬ ГЄГ«Г Г±Г±Г  TTextMemoryManagment, 
+								 //Г®Г­ ГЁГ¬ГҐГҐГІ Г¤Г®Г±ГІГіГЇ ГЄ privat-Г·Г«ГҐГ­Г Г¬ ГЄГ«Г±Г±Г±Г  TTextMemoryManagment
+	
 };
 
-typedef TTextPointerManagment* PTTextPointerManagment;//новый тип данных:указатель на класс управления указателями
+typedef TTextPointerManagment* PTTextPointerManagment;//Г­Г®ГўГ»Г© ГІГЁГЇ Г¤Г Г­Г­Г»Гµ:ГіГЄГ Г§Г ГІГҐГ«Гј Г­Г  ГЄГ«Г Г±Г± ГіГЇГ°Г ГўГ«ГҐГ­ГЁГї ГіГЄГ Г§Г ГІГҐГ«ГїГ¬ГЁ
 
 
 class TAtomicTextLink
 {
 protected:
-	TextString str;// создаём строку из чаров длины TEXT_LINE_LENGHT
-	PTAtomicTextLink p_next, p_down;// указатели типа звена (TAtomicTextLink) на следующий катало и на подуровень
-	//система управления памятью
-	static TTextPointerManagment pointer_header;
+	TextString str;// Г±Г®Г§Г¤Г ВёГ¬ Г±ГІГ°Г®ГЄГі ГЁГ§ Г·Г Г°Г®Гў Г¤Г«ГЁГ­Г» TEXT_LINE_LENGHT
+	PTAtomicTextLink p_next, p_down;// ГіГЄГ Г§Г ГІГҐГ«ГЁ ГІГЁГЇГ  Г§ГўГҐГ­Г  (TAtomicTextLink) Г­Г  Г±Г«ГҐГ¤ГіГѕГ№ГЁГ© ГЄГ ГІГ Г«Г® ГЁ Г­Г  ГЇГ®Г¤ГіГ°Г®ГўГҐГ­Гј
+	//Г±ГЁГ±ГІГҐГ¬Г  ГіГЇГ°Г ГўГ«ГҐГ­ГЁГї ГЇГ Г¬ГїГІГјГѕ
+	
 public:
-	static void InitializationMemorySystem(int size=MEMORY_SIZE);//инициализация (выделения) памяти
-	static void PrintFreeLink(void);// печать свободных звеньев
-	//перегрузка операторов
+	static TTextPointerManagment pointer_header;
+	static void InitializationMemorySystem(int size = MEMORY_SIZE);//ГЁГ­ГЁГ¶ГЁГ Г«ГЁГ§Г Г¶ГЁГї (ГўГ»Г¤ГҐГ«ГҐГ­ГЁГї) ГЇГ Г¬ГїГІГЁ
+	static void PrintFreeLink(void);// ГЇГҐГ·Г ГІГј Г±ГўГ®ГЎГ®Г¤Г­Г»Гµ Г§ГўГҐГ­ГјГҐГў
+	//ГЇГҐГ°ГҐГЈГ°ГіГ§ГЄГ  Г®ГЇГҐГ°Г ГІГ®Г°Г®Гў
 	void* operator new (size_t size);//unsigned int == size_t
-	void operator delete (void* p_link_to_delete);//что такое указатель на войд?????
-	static void GarbageCollector(const TText& txt);//что такое константные ссылки?????
-	//коснтруктор
-	TAtomicTextLink(TextString str_to_copy  = NULL, PTAtomicTextLink p_nxt = NULL, PTAtomicTextLink p_dwn = NULL)
+	void operator delete (void* p_link_to_delete);//Г·ГІГ® ГІГ ГЄГ®ГҐ ГіГЄГ Г§Г ГІГҐГ«Гј Г­Г  ГўГ®Г©Г¤?????
+	static void GarbageCollector(const TText& txt);//Г·ГІГ® ГІГ ГЄГ®ГҐ ГЄГ®Г­Г±ГІГ Г­ГІГ­Г»ГҐ Г±Г±Г»Г«ГЄГЁ?????
+	//ГЄГ®Г±Г­ГІГ°ГіГЄГІГ®Г°
+	TAtomicTextLink(TextString str_to_copy = NULL, PTAtomicTextLink p_nxt = NULL, PTAtomicTextLink p_dwn = NULL)
 	{
 		p_next = p_nxt;
 		p_down = p_dwn;
@@ -55,22 +59,22 @@ public:
 			str[0] = '\0';
 		}
 	}
-	//деструктор
+	//Г¤ГҐГ±ГІГ°ГіГЄГІГ®Г°
 	~TAtomicTextLink()
 	{
-		//нужно будет реализовать
+		//Г­ГіГ¦Г­Г® ГЎГіГ¤ГҐГІ Г°ГҐГ Г«ГЁГ§Г®ГўГ ГІГј
 	}
-	//проверка атомарности звена
+	//ГЇГ°Г®ГўГҐГ°ГЄГ  Г ГІГ®Г¬Г Г°Г­Г®Г±ГІГЁ Г§ГўГҐГ­Г 
 	int IsAtom()
 	{
-		return (p_down == NULL);//если нету подуровня то вернётся true ,иначе false
+		return (p_down == NULL);//ГҐГ±Г«ГЁ Г­ГҐГІГі ГЇГ®Г¤ГіГ°Г®ГўГ­Гї ГІГ® ГўГҐГ°Г­ВёГІГ±Гї true ,ГЁГ­Г Г·ГҐ false
 	}
-	//геттер на следущее звено
+	//ГЈГҐГІГІГҐГ° Г­Г  Г±Г«ГҐГ¤ГіГ№ГҐГҐ Г§ГўГҐГ­Г®
 	PTAtomicTextLink GetNext()
 	{
 		return p_next;
 	}
-	//геттер на подуровень
+	//ГЈГҐГІГІГҐГ° Г­Г  ГЇГ®Г¤ГіГ°Г®ГўГҐГ­Гј
 	PTAtomicTextLink GetDown()
 	{
 		return p_down;
@@ -81,12 +85,11 @@ public:
 		return new TAtomicTextLink(str, p_next, p_down);
 	}
 protected:
-	//печать строки
+	//ГЇГҐГ·Г ГІГј Г±ГІГ°Г®ГЄГЁ
 	virtual void Print(std::ostream& os)
 	{
 		os << str;
 	}
 	friend class TText;
 };
-
 

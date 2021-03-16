@@ -4,10 +4,8 @@
 int main()
 {
 	char string_1[20];
-	TAtomicTextLink test_text();
-    std::cout << "Hello World!\n";
+	TAtomicTextLink test_text;
+	test_text.InitializationMemorySystem();
+	test_text.PrintFreeLink();
+	std::cout << "Hello World!\n";
 }
-
-
-
-
