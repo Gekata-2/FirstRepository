@@ -1,95 +1,94 @@
-ï»¿#pragma once
 #pragma once
 #include <memory>
 #include <string>
 #include <iostream>
-
 #include "CompletionCodesDefine.h"
 #include "MainConstantsEnum.h"
 #include "IObjValue.h"
 #define	TEXT_LINE_LENGHT 20
 #define MEMORY_SIZE		 20
-
+#pragma warning(disable : 4996)
 class TText;
-class TAtomicTextLink;//ÃªÃ«Ã Ã±Ã±- Ã®Ã¤Ã­Ã  Ã Ã²Ã®Ã¬Ã Ã°Ã­Ã®Ã¥ Ã§Ã¢Ã¥Ã­Ã®(Ã±Ã²Ã°Ã®ÃªÃ )<--------------------<
-typedef TAtomicTextLink* PTAtomicTextLink;//Ã­Ã®Ã¢Ã»Ã© Ã²Ã¨Ã¯ Ã¤Ã Ã­Ã­Ã»Ãµ:Ã“ÃªÃ Ã§Ã Ã²Ã¥Ã«Ã¼ Ã­Ã  Ã§Ã¢Ã¥Ã­Ã® ^
+class TAtomicTextLink;//êëàññ- îäíà àòîìàðíîå çâåíî(ñòðîêà)<--------------------<
+typedef TAtomicTextLink* PTAtomicTextLink;//íîâûé òèï äàííûõ:Óêàçàòåëü íà çâåíî ^
 typedef char TextString[TEXT_LINE_LENGHT];//TextString==char[TEXT_LINE_LENGHT]
 
-//ÃªÃ«Ã Ã±Ã± Ã³Ã¯Ã°Ã Ã¢Ã«Ã¥Ã­Ã¨Ã¿ Ã³ÃªÃ Ã§Ã Ã²Ã¥Ã«Ã¿Ã¬Ã¨ 
+//êëàññ óïðàâëåíèÿ óêàçàòåëÿìè 
 class TTextPointerManagment
 {
-	//ÃªÃ«Ã Ã±Ã± Ã±Ã®Ã±Ã²Ã®Ã¨Ã² Ã¨Ã§ Ã³ÃªÃ Ã§Ã Ã²Ã¥Ã«Ã¥Ã© Ã­Ã¥ Ã§Ã¢Ã¥Ã­Ã¼Ã¿(Ã±Ã²Ã°Ã®ÃªÃ¨) Ã¢ Ã²Ã¥ÃªÃ±Ã²Ã¥
-	 PTAtomicTextLink p_first_link;// Ã³ÃªÃ Ã§Ã Ã²Ã¥Ã«Ã¼ Ã­Ã  Ã¯Ã¥Ã°Ã¢Ã®Ã¥ Ã§Ã¢Ã¥Ã­Ã®
-	 PTAtomicTextLink p_last_link; //Ã³ÃªÃ Ã§Ã Ã²Ã¥Ã«Ã¼ Ã­Ã  Ã¯Ã®Ã±Ã«Ã¤Ã¥Ã­Ã¥Ã¥ Ã§Ã¢Ã¥Ã­Ã®
-	 PTAtomicTextLink p_first_free_link; // Ã³ÃªÃ Ã§Ã Ã²Ã¥Ã«Ã¼ Ã­Ã  Ã¯Ã¥Ã°Ã¢Ã®Ã¥ Ã±Ã¢Ã®Ã¡Ã®Ã¤Ã­Ã®Ã¥ Ã§Ã¢Ã¥Ã­Ã®
-	friend class TAtomicTextLink;//ÃÃ«Ã Ã£Ã®Ã¤Ã Ã°Ã¿ Ã²Ã®Ã¬Ã³ Ã·Ã²Ã® ÃªÃ«Ã Ã±Ã± TAtomicTextLink Ã¿Ã¢Ã«Ã¿Ã¥Ã²Ã±Ã¿ ÃªÃ¥Ã­Ã²Ã¨ÃªÃ®Ã¬ ÃªÃ«Ã Ã±Ã±Ã  TTextMemoryManagment, 
-								 //Ã®Ã­ Ã¨Ã¬Ã¥Ã¥Ã² Ã¤Ã®Ã±Ã²Ã³Ã¯ Ãª privat-Ã·Ã«Ã¥Ã­Ã Ã¬ ÃªÃ«Ã±Ã±Ã±Ã  TTextMemoryManagment
-	
+	//êëàññ ñîñòîèò èç óêàçàòåëåé íå çâåíüÿ(ñòðîêè) â òåêñòå
+	PTAtomicTextLink p_first_link;// óêàçàòåëü íà ïåðâîå çâåíî
+	PTAtomicTextLink p_last_link; //óêàçàòåëü íà ïîñëäåíåå çâåíî
+	PTAtomicTextLink p_first_free_link; // óêàçàòåëü íà ïåðâîå ñâîáîäíîå çâåíî
+	friend class TAtomicTextLink;//Áëàãîäàðÿ òîìó ÷òî êëàññ TAtomicTextLink ÿâëÿåòñÿ êåíòèêîì êëàññà TTextMemoryManagment, 
+								 //îí èìååò äîñòóï ê privat-÷ëåíàì êëñññà TTextMemoryManagment
 };
 
-typedef TTextPointerManagment* PTTextPointerManagment;//Ã­Ã®Ã¢Ã»Ã© Ã²Ã¨Ã¯ Ã¤Ã Ã­Ã­Ã»Ãµ:Ã³ÃªÃ Ã§Ã Ã²Ã¥Ã«Ã¼ Ã­Ã  ÃªÃ«Ã Ã±Ã± Ã³Ã¯Ã°Ã Ã¢Ã«Ã¥Ã­Ã¨Ã¿ Ã³ÃªÃ Ã§Ã Ã²Ã¥Ã«Ã¿Ã¬Ã¨
+typedef TTextPointerManagment* PTTextPointerManagment;//íîâûé òèï äàííûõ:óêàçàòåëü íà êëàññ óïðàâëåíèÿ óêàçàòåëÿìè
 
 
-class TAtomicTextLink
+class TAtomicTextLink : public IObjValue
 {
 protected:
-	TextString str;// Ã±Ã®Ã§Ã¤Ã Â¸Ã¬ Ã±Ã²Ã°Ã®ÃªÃ³ Ã¨Ã§ Ã·Ã Ã°Ã®Ã¢ Ã¤Ã«Ã¨Ã­Ã» TEXT_LINE_LENGHT
-	PTAtomicTextLink p_next, p_down;// Ã³ÃªÃ Ã§Ã Ã²Ã¥Ã«Ã¨ Ã²Ã¨Ã¯Ã  Ã§Ã¢Ã¥Ã­Ã  (TAtomicTextLink) Ã­Ã  Ã±Ã«Ã¥Ã¤Ã³Ã¾Ã¹Ã¨Ã© ÃªÃ Ã²Ã Ã«Ã® Ã¨ Ã­Ã  Ã¯Ã®Ã¤Ã³Ã°Ã®Ã¢Ã¥Ã­Ã¼
-	//Ã±Ã¨Ã±Ã²Ã¥Ã¬Ã  Ã³Ã¯Ã°Ã Ã¢Ã«Ã¥Ã­Ã¨Ã¿ Ã¯Ã Ã¬Ã¿Ã²Ã¼Ã¾
-	
-public:
+	TextString str;// ñîçäà¸ì ñòðîêó èç ÷àðîâ äëèíû TEXT_LINE_LENGHT
+	PTAtomicTextLink p_next, p_down;// óêàçàòåëè òèïà çâåíà (TAtomicTextLink) íà ñëåäóþùèé êàòàëî è íà ïîäóðîâåíü
+	//ñèñòåìà óïðàâëåíèÿ ïàìÿòüþ
 	static TTextPointerManagment pointer_header;
-	static void InitializationMemorySystem(int size = MEMORY_SIZE);//Ã¨Ã­Ã¨Ã¶Ã¨Ã Ã«Ã¨Ã§Ã Ã¶Ã¨Ã¿ (Ã¢Ã»Ã¤Ã¥Ã«Ã¥Ã­Ã¨Ã¿) Ã¯Ã Ã¬Ã¿Ã²Ã¨
-	static void PrintFreeLink(void);// Ã¯Ã¥Ã·Ã Ã²Ã¼ Ã±Ã¢Ã®Ã¡Ã®Ã¤Ã­Ã»Ãµ Ã§Ã¢Ã¥Ã­Ã¼Ã¥Ã¢
-	//Ã¯Ã¥Ã°Ã¥Ã£Ã°Ã³Ã§ÃªÃ  Ã®Ã¯Ã¥Ã°Ã Ã²Ã®Ã°Ã®Ã¢
-	void* operator new (size_t size);//unsigned int == size_t
-	void operator delete (void* p_link_to_delete);//Ã·Ã²Ã® Ã²Ã ÃªÃ®Ã¥ Ã³ÃªÃ Ã§Ã Ã²Ã¥Ã«Ã¼ Ã­Ã  Ã¢Ã®Ã©Ã¤?????
-	static void GarbageCollector(const TText& txt);//Ã·Ã²Ã® Ã²Ã ÃªÃ®Ã¥ ÃªÃ®Ã­Ã±Ã²Ã Ã­Ã²Ã­Ã»Ã¥ Ã±Ã±Ã»Ã«ÃªÃ¨?????
-	//ÃªÃ®Ã±Ã­Ã²Ã°Ã³ÃªÃ²Ã®Ã°
-	TAtomicTextLink(TextString str_to_copy = NULL, PTAtomicTextLink p_nxt = NULL, PTAtomicTextLink p_dwn = NULL)
+public:
+	static void InitializationMemorySystem(int size=MEMORY_SIZE);//èíèöèàëèçàöèÿ (âûäåëåíèÿ) ïàìÿòè		+++
+	static void PrintFreeLink(void);// ïå÷àòü ñâîáîäíûõ çâåíüåâ											+++
+	//ïåðåãðóçêà îïåðàòîðîâ
+	void* operator new (size_t size);//unsigned int == size_t											+++
+	void operator delete (void* p_link_to_delete);//													??---				
+	static void GarbageCollector(const TText& txt);//÷òî òàêîå êîíñòàíòíûå ññûëêè?????					---
+	//êîñíòðóêòîð
+	TAtomicTextLink(TextString str_to_copy  = NULL, PTAtomicTextLink p_nxt = NULL, PTAtomicTextLink p_dwn = NULL)
 	{
 		p_next = p_nxt;
 		p_down = p_dwn;
 		if (str_to_copy != NULL)
 		{
-			strcpy_s(str, str_to_copy);
+			strcpy(str, str_to_copy);
 		}
 		else
 		{
 			str[0] = '\0';
 		}
 	}
-	//Ã¤Ã¥Ã±Ã²Ã°Ã³ÃªÃ²Ã®Ã°
+	//äåñòðóêòîð
 	~TAtomicTextLink()
 	{
-		//Ã­Ã³Ã¦Ã­Ã® Ã¡Ã³Ã¤Ã¥Ã² Ã°Ã¥Ã Ã«Ã¨Ã§Ã®Ã¢Ã Ã²Ã¼
+		delete[] str;
+		delete p_next;
+		delete p_down;
 	}
-	//Ã¯Ã°Ã®Ã¢Ã¥Ã°ÃªÃ  Ã Ã²Ã®Ã¬Ã Ã°Ã­Ã®Ã±Ã²Ã¨ Ã§Ã¢Ã¥Ã­Ã 
+	//ïðîâåðêà àòîìàðíîñòè çâåíà
 	int IsAtom()
 	{
-		return (p_down == NULL);//Ã¥Ã±Ã«Ã¨ Ã­Ã¥Ã²Ã³ Ã¯Ã®Ã¤Ã³Ã°Ã®Ã¢Ã­Ã¿ Ã²Ã® Ã¢Ã¥Ã°Ã­Â¸Ã²Ã±Ã¿ true ,Ã¨Ã­Ã Ã·Ã¥ false
+		return (p_down == NULL);//åñëè íåòó ïîäóðîâíÿ òî âåðí¸òñÿ true ,èíà÷å false
 	}
-	//Ã£Ã¥Ã²Ã²Ã¥Ã° Ã­Ã  Ã±Ã«Ã¥Ã¤Ã³Ã¹Ã¥Ã¥ Ã§Ã¢Ã¥Ã­Ã®
+	//ãåòòåð íà ñëåäóùåå çâåíî
 	PTAtomicTextLink GetNext()
 	{
 		return p_next;
 	}
-	//Ã£Ã¥Ã²Ã²Ã¥Ã° Ã­Ã  Ã¯Ã®Ã¤Ã³Ã°Ã®Ã¢Ã¥Ã­Ã¼
+	//ãåòòåð íà ïîäóðîâåíü
 	PTAtomicTextLink GetDown()
 	{
 		return p_down;
 	}
 
-	void* GetCopy()
+	IObjValue* GetCopy() override
 	{
 		return new TAtomicTextLink(str, p_next, p_down);
 	}
 protected:
-	//Ã¯Ã¥Ã·Ã Ã²Ã¼ Ã±Ã²Ã°Ã®ÃªÃ¨
+	//ïå÷àòü ñòðîêè
 	virtual void Print(std::ostream& os)
 	{
 		os << str;
 	}
 	friend class TText;
 };
+
 

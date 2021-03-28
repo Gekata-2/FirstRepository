@@ -1,1 +1,6 @@
-﻿LINK : fatal error LNK1104: не удается открыть файл "AtomicTextLink.obj"
+﻿  Main.cpp
+  Text.cpp
+C:\Users\admin\source\repos\Text\Text\AtomicTextLink.h(61,1): warning C4154: удаление массива; выполнено преобразование к указателю
+  Создание кода...
+C:\Users\admin\source\repos\Text\Text\AtomicTextLink.h(61,1): warning C4154: удаление массива; выполнено преобразование к указателю
+  Text.vcxproj -> C:\Users\admin\source\repos\Text\Debug\Text.exe

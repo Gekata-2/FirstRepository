@@ -1,11 +1,10 @@
-п»ї#pragma once
 #pragma once
 
-#define TEXT_OK 0 //ГЋГёГЁГЎГ®ГЄ Г­ГҐГІ	
-//ГЉГ®Г¤Г» Г±ГЁГІГіГ Г¶ГЁГ©
-#define TEXT_NO_DOWN_LEVEL_EXIST 101		//ГЌГҐГІ ГЇГ®Г¤ГіГ°Г®ГўГ®Г­Гї Г¤Г«Гї ГІГҐГЄГіГ№ГҐГ© ГЇГ®Г§ГЁГ¶ГЁГЁ
-#define TEXT_NO_NEXT_SAME_LEVEL_EXIST 102	//ГЌГҐГІ Г±Г«ГҐГ¤ГіГѕГ№ГҐГЈГ® Г°Г Г§Г¤ГҐГ«Г  ГІГҐГЄГіГ№ГҐГЈГ® ГіГ°Г®ГўГ­Гї
-#define TEXT_NO_PREV_LEVEL_EXIST 103		//ГЌГҐГІ ГіГ°Г®ГўГ­ГҐГ© ГўГ»Г№ГҐ(Г’ГҐГЄГіГ№Г Гї ГЇГ®Г§ГЁГ¶ГЁГї Гў Г­Г Г·Г Г«ГҐ ГІГҐГЄГ±ГІГ )
-		//ГЉГ®Г¤Г» Г®ГёГЁГЎГ®ГЄ
-#define TEXT_ERROR_IN_TEXT -102				//ГЋГёГЁГЎГЄГ  Гў ГІГҐГЄГ±ГІГҐ
-#define TEXT_MEMORY_OWERFLOW  -101			//ГЉГ®Г­Г·ГЁГ«Г Г±Гј ГЇГ Г¬ГїГІГј
+#define TEXT_OK 0 //Ошибок нет	
+		//Коды ситуаций
+#define TEXT_NO_DOWN_LEVEL_EXIST 101		//Нет подуровоня для текущей позиции
+#define TEXT_NO_NEXT_SAME_LEVEL_EXIST 102	//Нет следующего раздела текущего уровня
+#define TEXT_NO_PREV_LINK_EXIST 103		//Нет уровней выще(Текущая позиция в начале текста)
+		//Коды ошибок
+#define TEXT_ERROR_IN_TEXT -102				//Ошибка в тексте
+#define TEXT_MEMORY_OWERFLOW  -101			//Кончилась память
