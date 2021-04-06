@@ -1,0 +1,3 @@
+﻿  Text.cpp
+C:\Users\ksf\source\repos\Text\Text\AtomicTextLink.h(61,1): warning C4154: удаление массива; выполнено преобразование к указателю
+  Text.vcxproj -> C:\Users\ksf\source\repos\Text\x64\Debug\Text.exe
