@@ -1,0 +1,9 @@
+﻿  AtomicTextLink.cpp
+D:\Repositories\FirstRepository\Text\AtomicTextLink.cpp(16,7): warning C4101: 'Line': unreferenced local variable
+  Main.cpp
+D:\Repositories\FirstRepository\Text\Main.cpp(22,9): warning C4068: unknown pragma 'argsused'
+D:\Repositories\FirstRepository\Text\Main.cpp(192,18): warning C4101: 'pText': unreferenced local variable
+  Text.cpp
+D:\Repositories\FirstRepository\Text\Text.cpp(453,7): warning C4101: 'tmp_string': unreferenced local variable
+  Generating Code...
+  Text.vcxproj -> D:\Repositories\FirstRepository\Text\Debug\Text.exe
