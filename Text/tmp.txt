@@ -1,0 +1,50 @@
+void TText::SwapLines(PTAtomicTextLink l_1, PTAtomicTextLink l_2)
+{
+	TextString empty_str;
+	PTAtomicTextLink temp = new TAtomicTextLink(empty_str, NULL, NULL);
+	string temp_str, str1, str2;
+
+	str1 = l_1->str;//L1
+	strncpy(temp->str, str1.c_str(), TEXT_LINE_LENGHT); //T = L1
+		/*	temp.p_next = l_1.p_next;
+			temp.p_down = l_1.p_down;*/
+	
+	str2 = l_2->str;//L2
+	strncpy(l_1->str, str2.c_str(), TEXT_LINE_LENGHT); //L1 = L2
+			/*l_1.p_next = l_2.p_next;
+			l_1.p_down = l_2.p_down;*/
+	temp_str = temp->str;
+	strncpy(l_2->str, temp_str.c_str(), TEXT_LINE_LENGHT);    //L2=T
+			/*l_2.p_next = temp.p_next;
+			l_2.p_down = temp.p_down;*/
+
+}
+
+PTAtomicTextLink TText::GetCurrentPtr()
+{
+	if (p_current == NULL)//если текущая строка нулевая
+	{
+		SetReturnCode(TEXT_ERROR_IN_TEXT);//возвращаем ошибку
+	}
+	else//если текущая строка не нулева
+	{
+		return p_current;
+	}
+}
+
+
+
+ if (!star_pressed)//если звёздочку ещё не нажали,то
+                {
+                    star_pressed=1;//переводим состояние в "нажатие было произведено"
+                  //  st = txt.GetCurrentLine();//L1
+                    p_temp = txt.GetCurrentPtr();//L1 запоменаем указатель на текущее звено
+                }
+                else//если звёздочка уже была нажата
+                {
+                  
+                    //меняем строки местами в текущем звене и звене ,которе до этого запомнили
+                    txt.SwapLines(p_temp, txt.GetCurrentPtr());        
+                                   
+                }
+                break;
