@@ -1,14 +1,18 @@
+
 void TText::SwapLines(PTAtomicTextLink l_1, PTAtomicTextLink l_2)
 {
 	TextString empty_str;
 	PTAtomicTextLink temp = new TAtomicTextLink(empty_str, NULL, NULL);
 	string temp_str, str1, str2;
+	temp->p_down = NULL;
+	temp->p_next = NULL;
+	strncpy(temp->str, empty_str, TEXT_LINE_LENGHT);
 
 	str1 = l_1->str;//L1
 	strncpy(temp->str, str1.c_str(), TEXT_LINE_LENGHT); //T = L1
 		/*	temp.p_next = l_1.p_next;
 			temp.p_down = l_1.p_down;*/
-	
+
 	str2 = l_2->str;//L2
 	strncpy(l_1->str, str2.c_str(), TEXT_LINE_LENGHT); //L1 = L2
 			/*l_1.p_next = l_2.p_next;
@@ -22,11 +26,11 @@ void TText::SwapLines(PTAtomicTextLink l_1, PTAtomicTextLink l_2)
 
 PTAtomicTextLink TText::GetCurrentPtr()
 {
-	if (p_current == NULL)//если текущая строка нулевая
+	if (p_current == NULL)//anee oaeouay no?iea ioeaaay
 	{
-		SetReturnCode(TEXT_ERROR_IN_TEXT);//возвращаем ошибку
+		SetReturnCode(TEXT_ERROR_IN_TEXT);//aica?auaai ioeaeo
 	}
-	else//если текущая строка не нулева
+	else//anee oaeouay no?iea ia ioeaaa
 	{
 		return p_current;
 	}
@@ -34,17 +38,151 @@ PTAtomicTextLink TText::GetCurrentPtr()
 
 
 
- if (!star_pressed)//если звёздочку ещё не нажали,то
+
+ void TextProcessor(TText& txt)
+{
+   int dir, unit;//dir(direction) - направление манипуляции (down/next), unit - объект манипуляции (line/section) 
+   string st;//строка ,если нужно будет вставить строку 
+   char ch;//принимаемый символ для манипуляции: >,v,^,Home,Ins,Del,Enter,Esc
+   TextString empty_stirng;
+   PTAtomicTextLink p_temp=NULL;
+   int star_pressed = 0;
+    do
+    {
+        gotoxy(1, 1);
+        
+        cout << ">, v, ^, Home, Ins, Del, Enter, Esc, *";
+
+        ch = getch();//получаем что делать
+
+
+
+        if (ch == ESC)//выход
+        {
+            break;
+        }
+        if ((ch != ENTER)&&(ch!=STAR))//если не выходим ,то продолжаем манипуляцию 
+        {
+            ch = getch();
+        }
+         switch (ch)
+         {
+            case ENTER://ввод строки
+                gotoxy(1, 1);
+                printf("\r                                         \r");
+                cout << "Line (without blanks): ";
+                cin >> st;
+                txt.SetCurrentLine(st);
+                TextTyper(txt);
+                break;
+            case HOME://перемещение на корень текста
+                txt.GoFirstLink();
+                break;
+            case DOWN: //перемещение на подуровень
+                txt.GoDownLink();
+                break;
+            case NEXT://перемещение вперёд
+                txt.GoNextLink();
+                break;
+            case UP://перемещение назад
+                txt.GoPrevLink();
+                break;
+            case STAR:
+                if (!star_pressed)//anee ca?cai?eo au? ia ia?aee,oi
                 {
-                    star_pressed=1;//переводим состояние в "нажатие было произведено"
+                    star_pressed = 1;//ia?aaiaei ninoiyiea a "ia?aoea auei i?iecaaaaii"
                   //  st = txt.GetCurrentLine();//L1
-                    p_temp = txt.GetCurrentPtr();//L1 запоменаем указатель на текущее звено
+                    p_temp = txt.GetCurrentPtr();//L1 caiiiaiaai oeacaoaeu ia oaeouaa caaii
+                    string star_st="*"+txt.GetCurrentLine();
+                    txt.SetCurrentLine(star_st);
+                    TextTyper(txt);
                 }
-                else//если звёздочка уже была нажата
+                else//anee ca?cai?ea o?a auea ia?aoa
                 {
-                  
-                    //меняем строки местами в текущем звене и звене ,которе до этого запомнили
-                    txt.SwapLines(p_temp, txt.GetCurrentPtr());        
-                                   
+
+                    //iaiyai no?iee ianoaie a oaeouai caaia e caaia ,eioi?a ai yoiai caiiiieee
+                    txt.SwapLines(p_temp, txt.GetCurrentPtr());
                 }
                 break;
+            case INS:  //если вставка или удаление то обрабатываем сложнее        
+            case DEL:          
+                //т.к в INS нет break; ,то при нажатии INS или DEL программа перейдёт сюда
+                gotoxy(1, 1);
+                printf("\r                                         \r");
+
+                cout << "Direction: 0 - Down. 1-Next : ";//выбираем направление манипуляции
+                cin >> dir;
+
+                gotoxy(1, 1);
+                printf("\r                                         \r");
+
+                cout << "Unit: 0 - Line, 1 - Section : ";//выбираем предмет манипуляции
+                cin >> unit;
+           
+            if (ch == INS)// если у нас вставка
+            {
+                gotoxy(1, 1);
+                printf("\r                                         \r");
+
+                cout << "Line(without blanks): "; //получаем строку,
+                cin >> st;                        //которую нужно вставить
+                    // 0 - подуровень,1 - текщий уровень
+                if (dir == 0)//манипулиция с подуровнем 
+                {
+                        //0 - строка, 1 - раздел
+                    if (unit == 0)//вставка строки (в подуровнь)
+                    {
+                        txt.InsertDownLine(st);
+                    }
+                    else//вставка раздела (в подуровень)
+                    {
+                        txt.InsertDownSection(st);
+
+                    }
+                }
+                else//если dir != 0.То есть манипуляция со на текущем уровне
+                {
+                    if (unit == 0)//аналогично разделение на строку или раздел.Отличие лишь в том,что операия производится в текущем уровне
+                    {
+                        txt.InsertNextLine(st);
+                    }
+                    else
+                    {
+                        txt.InsertNextSection(st);
+                    }
+                }
+
+            }
+            else // если удаление,то аналогично.
+            {
+                if (dir == 0)//сначла идёт разделение на напрваление 0 - подуровень, 1 - текущий уровень
+                {
+                    if (unit == 0)//потом разделенеие на объект 0 - строка , 1 - уровень
+                    {
+                        txt.DeleteDownLine();
+                    }
+                    else
+                    {
+                        txt.DeleteDownSection();
+                    }
+                }
+                else
+                {
+                    if (unit == 0)
+                    {
+                        txt.DeleteNextLine();
+
+                    }
+                    else
+                    {
+                        txt.DeleteNextSection();
+                    }
+                }
+            }
+            TextTyper(txt);
+           
+            break;
+         }
+        TextLineMark(txt);
+    } while (ch != ESC);
+}
