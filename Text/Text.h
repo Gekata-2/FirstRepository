@@ -59,5 +59,8 @@ public:
 	void Write(char* p_file_name);		//вывод текста из файла
 	//печать 
 	void Print(void);					//печать текста
+	PTAtomicTextLink GetCurrentPtr();
+	void SwapLines(PTAtomicTextLink);
+	
 };
 

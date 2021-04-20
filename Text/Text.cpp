@@ -499,3 +499,45 @@ PTAtomicTextLink TText::ReadText(std::ifstream &txt_file)
 	}
 	return p_head;
 }
+
+
+
+
+PTAtomicTextLink TText::GetCurrentPtr()
+{
+	if (p_current == NULL)//anee oaeouay no?iea ioeaaay
+	{
+		SetReturnCode(TEXT_ERROR_IN_TEXT);//aica?auaai ioeaeo
+	}
+	else//anee oaeouay no?iea ia ioeaaa
+	{
+		return p_current;
+	}
+}
+
+
+/*
+temp = l1
+l1 = l2
+l2 = temp
+
+l1 - current
+*/
+void TText::SwapLines(PTAtomicTextLink p_2)
+{
+	PTAtomicTextLink p_temp = p_current;
+
+	string tmp_s;
+	tmp_s = p_current->str;
+	SetCurrentLine(p_2->str);
+
+	p_current = p_2;
+	SetCurrentLine(tmp_s);
+
+
+	p_current = p_temp;
+	strcpy(p_current->str, p_current->str + 1);
+	
+
+
+}

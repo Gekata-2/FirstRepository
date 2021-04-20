@@ -18,6 +18,7 @@ using namespace std;
 #define INS 82
 #define DEL 83
 #define ENTER 13
+#define STAR 42
 
 #pragma	argsused
 string strs[100];
@@ -63,11 +64,13 @@ void TextProcessor(TText& txt)
    int dir, unit;//dir(direction) - направление манипуляции (down/next), unit - объект манипуляции (line/section) 
    string st;//строка ,если нужно будет вставить строку 
    char ch;//принимаемый символ для манипуляции: >,v,^,Home,Ins,Del,Enter,Esc
+   PTAtomicTextLink p_temp = NULL;
+   int star_pressed = 0;
     do
     {
         gotoxy(1, 1);
         
-        cout << ">, v, ^, Home, Ins, Del, Enter, Esc";
+        cout << ">, v, ^, Home, Ins, Del, Enter, Esc, *";
 
         ch = getch();//получаем что делать
 
@@ -76,7 +79,7 @@ void TextProcessor(TText& txt)
         {
             break;
         }
-        if (ch != ENTER)//если не выходим ,то продолжаем манипуляцию 
+        if ((ch != ENTER)&&(ch!=STAR))//если не выходим ,то продолжаем манипуляцию 
         {
             ch = getch();
         }
@@ -101,6 +104,23 @@ void TextProcessor(TText& txt)
                 break;
             case UP://перемещение назад
                 txt.GoPrevLink();
+                break;
+            case STAR:
+                if (!star_pressed)//anee ca?cai?eo au? ia ia?aee,oi
+                {
+                    star_pressed = 1;//ia?aaiaei ninoiyiea a "ia?aoea auei i?iecaaaaii"
+                  //  st = txt.GetCurrentLine();//L1
+                    p_temp = txt.GetCurrentPtr();//L1 caiiiaiaai oeacaoaeu ia oaeouaa caaii
+                    string star_st = "*" + txt.GetCurrentLine();
+                    txt.SetCurrentLine(star_st);
+                    TextTyper(txt);
+                }
+                else//anee ca?cai?ea o?a auea ia?aoa
+                {             
+                  txt.SwapLines(p_temp);
+                  star_pressed = 0;
+                  TextTyper(txt);
+                }
                 break;
             case INS:  //если вставка или удаление то обрабатываем сложнее        
             case DEL:          
