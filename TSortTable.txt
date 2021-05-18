@@ -1,0 +1,125 @@
+#include "TScanTable.h"
+
+enum ESortTable {INSERT_SORT,MERGE_SORT,QIUCK_SORT};
+
+class TSortTable : public TScanTable 
+{
+	potected:
+	TSortMethod sort_method;//индекс метода сортировки
+	void SortData(void);	//сортировка данных
+	void InsertSort(PTTabRecord* p_mem,int data_count); //метод вставок
+	void MergeSort(PTTabRecord* p_mem,int data_count);  //метод слияния
+	void MergeSorter(PTTabRecord* &p_data,PTTabRecord*&p_buff,int size);
+	
+	void MergeData (PTTabRecord* &p_data,PTTabRecord* &p_buff,int n1,int n2);
+	void QuickSort (PTTabRecord* p_mem,int data_count);//быстрая сортировка
+	void QuickSplit (PTTabRecord* p_data,int size,int &pivot);
+	
+	public:
+	TSortTable(int size = tab_max_size) : TScanTable(size)
+	{
+	};
+	TSortTable(const TScanTable &tab);
+	TSortTable &operator=(const TScanTable &tab);
+	TSortMethod GetSortMethod(void)
+	{
+		return sort_method;
+	}
+	void SetSortMethod(TSortMethod sm)
+	{
+	sort_method=sm;
+	}
+	virtual int* FindRecord(TKey k);
+	virtual void InsRecord(TKey k,int* p_val);
+	
+	virtual void DelRecord(TKey k);
+	
+}
+
+
+
+#include "TSortTable"
+
+TSortTable::TSortTable(const TScanTable &tab)
+{
+	*this=tab;
+}
+
+TSortTable &TSortTable::operator=(const TScanTable &tab)
+{
+	if(p_records != NULL)
+	{
+		for(int i =0; i<number_of_records;i++)
+		{
+			delete p_records[i];
+		}
+		
+		delete[] p_records;
+		p_records=NULL;
+	}
+	table_size = tab.GetTabSize();
+	number_of_records=tab.GetDataCount();
+	p_records=  new PTTabRecord[table_size];
+	
+	for(int i=0;i<number_of_records;i++)
+	{
+		p_records[i]=(PTTabRecord)tab.p_records[i]->GetCopy();
+	}
+	
+	SortData();
+	current_pos = 0;
+	return *this;
+	
+}
+
+int* TSortTable::FindRecord(TKey k)
+{
+	int i=0,i1=0,i2=number_of_records-1;
+	/*------------------------*/
+}
+
+void TSortTable :: InsRecord(TKey k, int* p_val)
+{
+	if(IsFull())
+	{
+		SetReturnCode(TABLE_FULL);
+	}
+	else
+	{
+	int* temp=FindRecord(k);
+		if(return_code==TABLE_OK)
+		{
+		SetReturnCode(TABLE_REC_DOUBLE);
+		}
+		else
+		{
+			for(int i= number_of_records;i>current_pos;i--)
+			{
+				p_records[i]=p_records[i-1];				
+			}
+			p_records[current_pos] = new TTabRecord(k,p_val);
+			number_of_records++;
+		}	
+	}
+}
+
+void TSortTable::SortData(void)
+{
+	efficiency=0;
+	switch(sort_method)
+	{
+		case INSERT_SORT:
+			InsertSort(p_records,number_of_records);
+			break;
+		case MERGE_SORT
+			MergeSort(p_records,number_of_records);
+			break;
+		case QIUCK_SORT;
+			QuickSort(p_records,number_of_records)
+	
+	
+	}
+
+}
+
+
